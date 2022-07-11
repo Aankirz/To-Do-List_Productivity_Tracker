@@ -22,3 +22,4 @@ A todo list app
 	- checkTodo
 	- renderTodosList
 	- showNotification
+    
