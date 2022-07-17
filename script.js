@@ -9,15 +9,15 @@ console.log('working');
 /* And also we need to mark checked or not, if we say task is done then we 
 will add the checked attribute if not we will not do anything.*/
 
-function fetchTodos(){
-    //NEED  to change done-> completed , text -> title
-    //Get request
-    fetch('https://jsonplaceholder.typicode.com/todos')
-    .then(function(response){
-        console.log(response);
-        return response.json;
-    })
-}
+// function fetchTodos(){
+//     //NEED  to change done-> completed , text -> title
+//     //Get request
+//     fetch('https://jsonplaceholder.typicode.com/todos')
+//     .then(function(response){
+//         console.log(response);
+//         return response.json;
+//     })
+// }
  
 function addTaskToDOM(task){
     const li=document.createElement('li');
@@ -124,7 +124,7 @@ function handleClickListener(e){
 }
 
 function initializeApp(){
-    fetchTodos();
+    // fetchTodos();
     addTaskInput.addEventListener('keyup',handleInputKeypress);//Because as the user is typing you need to get the latest value
     document.addEventListener('click',handleClickListener);
 
