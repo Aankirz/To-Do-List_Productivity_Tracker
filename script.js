@@ -8,12 +8,23 @@ const tasksCounter=document.getElementById('tasks-counter');//to update no. of t
 console.log('working');
 /* And also we need to mark checked or not, if we say task is done then we 
 will add the checked attribute if not we will not do anything.*/
+
+function fetchTodos(){
+    //NEED  to change done-> completed , text -> title
+    //Get request
+    fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(function(response){
+        console.log(response);
+        return response.json;
+    })
+}
+ 
 function addTaskToDOM(task){
     const li=document.createElement('li');
     li.innerHTML= 
     `
-    <input type="checkbox" id="${task.id}" ${task.done ? `checked`:``} class="custom-checkbox">
-    <label for="${task.id}">${task.text}</label>
+    <input type="checkbox" id="${task.id}" ${task.completed ? `checked`:``} class="custom-checkbox">
+    <label for="${task.id}">${task.title}</label>
     <img src="bin1.png" class="delete" data-id="${task.id}" />
 
    ` ;// we don't need to use li tags again.
@@ -35,7 +46,7 @@ function toggleTask(taskId){
  })
  if(markTask.length>0){//means it has an object
     const currentTask=markTask[0];// only one object
-    currentTask.done=!currentTask.done;
+    currentTask.completed=!currentTask.completed;
     renderList();
     showNotification('Task Toggled Successfully');
     return;
@@ -94,6 +105,31 @@ function handleInputKeypress(e){
 
     }
 }
- 
-addTaskInput.addEventListener('keyup',handleInputKeypress);//Because as the user is typing you need to get the latest value
+
+//So we have added event delegation
+function handleClickListener(e){
+    const target=e.target;
+    console.log(target);
+
+    if(target.className=='delete'){
+     const taskId=target.dataset.id;
+     deleteTask(taskId);
+     return;
+    }else if(target.className=='custom-checkbox'){
+        const taskId=target.dataset.id;
+        toggleTask(taskId)
+        return;
+    }
+
+}
+
+function initializeApp(){
+    fetchTodos();
+    addTaskInput.addEventListener('keyup',handleInputKeypress);//Because as the user is typing you need to get the latest value
+    document.addEventListener('click',handleClickListener);
+
+}
+
+
+initializeApp();
 
